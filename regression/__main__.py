@@ -14,7 +14,7 @@ class Regression:
         self.train_data = 0
         self.model_name = ""
 
-    def predict(self, feature_matrix, target_vector, viz):
+    def predict(self, feature_matrix, target_vector, viz) -> LinearRegression:
         """
         Creates a Linear Regression model and helps you to predict target vector
         :param feature_matrix: Set of features corresponding to an object
@@ -28,8 +28,8 @@ class Regression:
         x = self.train_data.loc[:, feature_matrix]
         y = self.train_data.loc[:, target_vector]
         model.fit(x, y)
-        print("Parameters M: {}".format(model.coef_))
-        print("Parameters b: {}".format(model.intercept_))
+        # print("Parameters M: {}".format(model.coef_))
+        # print("Parameters b: {}".format(model.intercept_))
         if viz:
             self.plot_regression_results(
                 y.values,
@@ -40,7 +40,7 @@ class Regression:
         else:
             return model
 
-    def plot_regression_results(self, y_true, y_pred, scores, body_part):
+    def plot_regression_results(self, y_true, y_pred, scores, body_part) -> plt:
         """
         Scatter plot of the predicted vs true targets
         :param y_true: Original target values
@@ -100,11 +100,18 @@ def main(arguments: Sequence[str] = None):
         type=str,
         help="target_vector",
     )
+    parser.add_argument(
+        "--visualization",
+        metavar="visualization",
+        default=True,
+        type=bool,
+        help="visualization"
+    )
     args = parser.parse_args(arguments)
     reg = Regression()
     reg.train_data = pd.read_csv(args.data_filepath, index_col="ID")
     reg.model_name = "LinearRegression"
-    reg.predict(args.feature_matrix, args.target_vector, True)
+    reg.predict(args.feature_matrix, args.target_vector, args.visualization)
 
 
 if __name__ == "__main__":
