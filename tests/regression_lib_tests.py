@@ -1,7 +1,6 @@
 import unittest
 import pandas as pd
 from regression.__main__ import Regression
-from sklearn.metrics import mean_squared_error
 
 
 class RegressionTestCase(unittest.TestCase):
